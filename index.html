@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fruits Shop</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <div class="logo">🍎Fruits Shop</div>
+  </div>
+  <div class="nav-center">
+    <ul class="nav-links navbar-right">
+      <li><a href="#">Home</a></li>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#" id="cart-btn">Bag(<span id="cart-count">0</span>)</a></li>
+      <li><a href="#" id="orders-btn">My Orders</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Banner -->
+<section class="banner">
+  <div class="container">
+    <div class="carousel">
+      <img src="all.jpeg" alt="Banner 1" />
+      <img src="all1.jpg" alt="Banner 2" />
+      <img src="all2.jpg" alt="Banner 3" />
+      <img src="all3.jpg" alt="Banner 4" />
+      <img src="all4.jpg" alt="Banner 5" />
+    </div>
+  </div>
+</section>
+
+<div class="shop-now-text" id="shop-now-text">Shop Now</div>
+
+<!-- Search bar -->
+<div class="search-container below-shop-now">
+  <input type="text" id="search-bar" placeholder="Search fruits..." />
+  <button id="search-btn" class="search-icon" aria-label="Search">🔍</button>
+</div>
+
+<!-- Products Section -->
+<main id="shop" class="shop-container">
+    <article class="product-card" data-id="1" data-name="Fresh Apples" data-price="332">
+      <img src="apples.jpg"
+        alt="Fresh Apples" />
+      <h3>Fresh Apples</h3>
+      <p class="price">₹332 / kg</p>
+      <button class="add-cart">Add to Cart</button>
+    </article>
+    <article class="product-card" data-id="2" data-name="Bananas" data-price="107">
+      <img src="Banana.jpg"
+        alt="Bananas" />
+      <h3>Bananas</h3>
+      <p class="price">₹107 / Bunch</p>
+      <button class="add-cart">Add to Cart</button>
+    </article>
+    <article class="product-card" data-id="3" data-name="Organic Carrots" data-price="208">
+      <img src="carrots.jpg"
+        alt="Organic Carrots" />
+      <h3>Organic Carrots</h3>
+      <p class="price">₹208 / kg</p>
+      <button class="add-cart">Add to Cart</button>
+    </article>
+    <article class="product-card" data-id="4" data-name="Strawberries" data-price="165">
+      <img src="strawberries.jpg"
+        alt="Strawberries" />
+      <h3>Strawberries</h3>
+      <p class="price">₹165 / kg</p>
+      <button class="add-cart">Add to Cart</button>
+    </article>
+    <article class="product-card" data-id="5" data-name="Pineapple" data-price="414">
+      <img src="pineapple.jpg"
+        alt="Pineapple" />
+      <h3>Pineapple</h3>
+      <p class="price">₹100 / each</p>
+      <button class="add-cart">Add to Cart</button>
+    </article>
+    <article class="product-card" data-id="6" data-name="Orange" data-price="290">
+      <img src="orange.jpg"
+        alt="Orange" />
+      <h3>Orange</h3>
+      <p class="price">₹290 / box</p>
+      <button class="add-cart">Add to Cart</button>
+    </article>
+    <article class="product-card" data-id="7" data-name="Watermelon" data-price="414">
+      <img src="watermelon.jpg"
+        alt="Watermelon" />
+      <h3>Watermelon</h3>
+      <p class="price">₹414 / each</p>
+      <button class="add-cart">Add to Cart</button>
+    </article>
+    <article class="product-card" data-id="8" data-name="Cherry" data-price="290">
+      <img src="cherry.jpg"
+        alt="Cherry" />
+      <h3>Cherry</h3>
+      <p class="price">₹290 / box</p>
+      <button class="add-cart">Add to Cart</button>
+    </article>
+  </main>
+
+<!-- Cart Sidebar -->
+<aside class="cart-sidebar" id="cart-sidebar">
+  <h2>Your Cart</h2>
+  <button class="close-cart" id="close-cart" aria-label="Close cart">&times;</button>
+  <div id="cart-items"></div>
+  <div class="cart-total">
+    <strong>Total:</strong> ₹<span id="cart-total">0.00</span>
+  </div>
+  <button class="checkout-btn" disabled>Checkout</button>
+</aside>
+
+<!-- My Orders Sidebar -->
+<aside class="cart-sidebar" id="orders-sidebar">
+  <h2>My Orders</h2>
+  <button class="close-cart" id="close-orders" aria-label="Close orders">&times;</button>
+  <div id="order-items">
+    <p>No orders yet.</p>
+  </div>
+  <button class="checkout-btn" id="clear-orders-btn">Clear Orders</button>
+</aside>
+
+<!-- Popup Message -->
+<div id="popup-message"></div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-logo">🍎 Fruits Shop</div>
+    <div class="footer-links">
+      <a href="#">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#" id="footer-cart">Bag</a>
+      <a href="#" id="footer-orders">My Orders</a>
+    </div>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram">📸</a>
+      <a href="#" aria-label="Twitter">🐦</a>
+      <a href="#" aria-label="Facebook">📘</a>
+    </div>
+    <div class="footer-credit">
+      &copy; 2025 Fruits Shop. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<!-- JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cartBtn = document.getElementById('cart-btn');
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const closeCartBtn = document.getElementById('close-cart');
+    const cartCount = document.getElementById('cart-count');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalElem = document.getElementById('cart-total');
+    const checkoutBtn = document.querySelector('.checkout-btn');
+    const orderSidebar = document.getElementById('orders-sidebar');
+    const closeOrdersBtn = document.getElementById('close-orders');
+    const orderItems = document.getElementById('order-items');
+    const ordersBtn = document.getElementById('orders-btn');
+    const clearOrdersBtn = document.getElementById('clear-orders-btn');
+
+    const searchBar = document.getElementById('search-bar');
+    const searchBtn = document.getElementById('search-btn');
+    const productCards = document.querySelectorAll('.product-card');
+
+    let cart = {};
+    let orders = [];
+
+    cartBtn.addEventListener('click', e => {
+      e.preventDefault();
+      cartSidebar.classList.add('open');
+    });
+
+    closeCartBtn.addEventListener('click', () => {
+      cartSidebar.classList.remove('open');
+    });
+
+    ordersBtn.addEventListener('click', e => {
+      e.preventDefault();
+      showOrders();
+    });
+
+    closeOrdersBtn.addEventListener('click', () => {
+      orderSidebar.classList.remove('open');
+    });
+
+    document.getElementById('footer-cart').addEventListener('click', e => {
+      e.preventDefault();
+      cartSidebar.classList.add('open');
+    });
+
+    document.getElementById('footer-orders').addEventListener('click', e => {
+      e.preventDefault();
+      showOrders();
+    });
+
+    document.querySelectorAll('.add-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        const product = button.closest('.product-card');
+        const id = product.getAttribute('data-id');
+        const name = product.getAttribute('data-name');
+        const price = parseFloat(product.getAttribute('data-price'));
+
+        if (cart[id]) {
+          cart[id].qty++;
+        } else {
+          cart[id] = { name, price, qty: 1 };
+        }
+        updateCartUI();
+      });
+    });
+
+    productCards.forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', (e) => {
+        if (e.target.tagName.toLowerCase() === 'button') return;
+        const target = document.getElementById('shop-now-text');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    function updateCartUI() {
+      let totalQty = 0;
+      let totalPrice = 0;
+      cartItemsContainer.innerHTML = '';
+
+      for (const id in cart) {
+        const item = cart[id];
+        totalQty += item.qty;
+        totalPrice += item.price * item.qty;
+
+        const itemElem = document.createElement('div');
+        itemElem.classList.add('cart-item');
+        itemElem.innerHTML = `
+          <div>
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-qty">Qty: ${item.qty}</div>
+          </div>
+          <div>
+            <span class="cart-item-price">₹${(item.price * item.qty).toFixed(2)}</span>
+            <button class="remove-item-btn" data-id="${id}" aria-label="Remove item">&times;</button>
+          </div>
+        `;
+
+        cartItemsContainer.appendChild(itemElem);
+      }
+
+      cartCount.textContent = totalQty;
+      cartTotalElem.textContent = totalPrice.toFixed(2);
+      checkoutBtn.disabled = totalQty === 0;
+      checkoutBtn.classList.toggle('enabled', totalQty > 0);
+      checkoutBtn.style.cursor = totalQty > 0 ? 'pointer' : 'not-allowed';
+
+      document.querySelectorAll('.remove-item-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          if (cart[id]) {
+            cart[id].qty--;
+            if (cart[id].qty <= 0) delete cart[id];
+            updateCartUI();
+          }
+        });
+      });
+    }
+
+    checkoutBtn.addEventListener('click', () => {
+      if (!checkoutBtn.disabled) {
+        const orderList = Object.values(cart).map(item => ({
+          name: item.name,
+          qty: item.qty,
+          price: item.price
+        }));
+        orders.push(...orderList);
+        cart = {};
+        updateCartUI();
+        cartSidebar.classList.remove('open');
+        showPopupMessage('Fruits Bought');
+      }
+    });
+
+    clearOrdersBtn.addEventListener('click', () => {
+      orders = [];
+      showOrders();
+      showPopupMessage('All orders cleared');
+    });
+
+    function showOrders() {
+      orderSidebar.classList.add('open');
+      orderItems.innerHTML = '';
+      if (orders.length === 0) {
+        orderItems.innerHTML = '<p>No orders yet.</p>';
+        return;
+      }
+
+      orders.forEach((order) => {
+        const orderElem = document.createElement('div');
+        orderElem.classList.add('cart-item');
+        orderElem.innerHTML = `
+          <div>
+            <div class="cart-item-name">${order.name}</div>
+            <div class="cart-item-qty">Qty: ${order.qty}</div>
+          </div>
+          <div class="cart-item-price">₹${(order.price * order.qty).toFixed(2)}</div>
+        `;
+        orderItems.appendChild(orderElem);
+      });
+    }
+
+    function showPopupMessage(message) {
+      const popup = document.getElementById('popup-message');
+      popup.textContent = message;
+      popup.classList.add('show');
+      setTimeout(() => {
+        popup.classList.remove('show');
+      }, 3000);
+    }
+
+    function filterProducts() {
+      const query = searchBar.value.toLowerCase().trim();
+      if (query === '') {
+        productCards.forEach(card => card.style.display = '');
+      } else {
+        productCards.forEach(card => {
+          const name = card.getAttribute('data-name').toLowerCase();
+          card.style.display = name.includes(query) ? '' : 'none';
+        });
+      }
+    }
+
+    searchBtn.addEventListener('click', filterProducts);
+    searchBar.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        filterProducts();
+      }
+    });
+
+    searchBar.addEventListener('input', () => {
+      if (searchBar.value.trim() === '') {
+        filterProducts();
+      }
+    });
+  });
+</script>
+</body>
+</html>
