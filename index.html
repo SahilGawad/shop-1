@@ -46,63 +46,63 @@
 
 <!-- Products Section -->
 <main id="shop" class="shop-container">
-    <article class="product-card" data-id="1" data-name="Fresh Apples" data-price="332">
-      <img src="apples.jpg"
-        alt="Fresh Apples" />
-      <h3>Fresh Apples</h3>
-      <p class="price">₹332 / kg</p>
-      <button class="add-cart">Add to Cart</button>
-    </article>
-    <article class="product-card" data-id="2" data-name="Bananas" data-price="107">
-      <img src="Banana.jpg"
-        alt="Bananas" />
-      <h3>Bananas</h3>
-      <p class="price">₹107 / Bunch</p>
-      <button class="add-cart">Add to Cart</button>
-    </article>
-    <article class="product-card" data-id="3" data-name="Organic Carrots" data-price="208">
-      <img src="carrots.jpg"
-        alt="Organic Carrots" />
-      <h3>Organic Carrots</h3>
-      <p class="price">₹208 / kg</p>
-      <button class="add-cart">Add to Cart</button>
-    </article>
-    <article class="product-card" data-id="4" data-name="Strawberries" data-price="165">
-      <img src="strawberries.jpg"
-        alt="Strawberries" />
-      <h3>Strawberries</h3>
-      <p class="price">₹165 / kg</p>
-      <button class="add-cart">Add to Cart</button>
-    </article>
-    <article class="product-card" data-id="5" data-name="Pineapple" data-price="414">
-      <img src="pineapple.jpg"
-        alt="Pineapple" />
-      <h3>Pineapple</h3>
-      <p class="price">₹100 / each</p>
-      <button class="add-cart">Add to Cart</button>
-    </article>
-    <article class="product-card" data-id="6" data-name="Orange" data-price="290">
-      <img src="orange.jpg"
-        alt="Orange" />
-      <h3>Orange</h3>
-      <p class="price">₹290 / box</p>
-      <button class="add-cart">Add to Cart</button>
-    </article>
-    <article class="product-card" data-id="7" data-name="Watermelon" data-price="414">
-      <img src="watermelon.jpg"
-        alt="Watermelon" />
-      <h3>Watermelon</h3>
-      <p class="price">₹414 / each</p>
-      <button class="add-cart">Add to Cart</button>
-    </article>
-    <article class="product-card" data-id="8" data-name="Cherry" data-price="290">
-      <img src="cherry.jpg"
-        alt="Cherry" />
-      <h3>Cherry</h3>
-      <p class="price">₹290 / box</p>
-      <button class="add-cart">Add to Cart</button>
-    </article>
-  </main>
+  <article class="product-card" data-id="1" data-name="Fresh Apples" data-price="332">
+    <img src="apples.jpg" alt="Fresh Apples" />
+    <h3>Fresh Apples</h3>
+    <p class="price">₹332 / kg</p>
+    <button class="add-cart">Add to Cart</button>
+  </article>
+  
+  <article class="product-card" data-id="2" data-name="Bananas" data-price="107">
+    <img src="Banana.jpg" alt="Bananas" class="hover-audio-image" data-audio="audio-banana" />
+    <audio id="audio-banana" src="kela.mp3" preload="auto"></audio>
+    <h3>Bananas</h3>
+    <p class="price">₹107 / Bunch</p>
+    <button class="add-cart">Add to Cart</button>
+  </article>
+  
+  <article class="product-card" data-id="3" data-name="Organic Carrots" data-price="208">
+    <img src="carrots.jpg" alt="Organic Carrots" />
+    <h3>Organic Carrots</h3>
+    <p class="price">₹208 / kg</p>
+    <button class="add-cart">Add to Cart</button>
+  </article>
+  
+  <article class="product-card" data-id="4" data-name="Strawberries" data-price="165">
+    <img src="strawberries.jpg" alt="Strawberries" />
+    <h3>Strawberries</h3>
+    <p class="price">₹165 / kg</p>
+    <button class="add-cart">Add to Cart</button>
+  </article>
+  
+  <article class="product-card" data-id="5" data-name="Pineapple" data-price="414">
+    <img src="pineapple.jpg" alt="Pineapple" />
+    <h3>Pineapple</h3>
+    <p class="price">₹100 / each</p>
+    <button class="add-cart">Add to Cart</button>
+  </article>
+  
+  <article class="product-card" data-id="6" data-name="Orange" data-price="290">
+    <img src="orange.jpg" alt="Orange" />
+    <h3>Orange</h3>
+    <p class="price">₹290 / box</p>
+    <button class="add-cart">Add to Cart</button>
+  </article>
+  
+  <article class="product-card" data-id="7" data-name="Watermelon" data-price="414">
+    <img src="watermelon.jpg" alt="Watermelon" />
+    <h3>Watermelon</h3>
+    <p class="price">₹414 / each</p>
+    <button class="add-cart">Add to Cart</button>
+  </article>
+  
+  <article class="product-card" data-id="8" data-name="Cherry" data-price="290">
+    <img src="cherry.jpg" alt="Cherry" />
+    <h3>Cherry</h3>
+    <p class="price">₹290 / box</p>
+    <button class="add-cart">Add to Cart</button>
+  </article>
+</main>
 
 <!-- Cart Sidebar -->
 <aside class="cart-sidebar" id="cart-sidebar">
@@ -273,34 +273,32 @@
 
     checkoutBtn.addEventListener('click', () => {
       if (!checkoutBtn.disabled) {
-        const orderList = Object.values(cart).map(item => ({
-          name: item.name,
-          qty: item.qty,
-          price: item.price
-        }));
-        orders.push(...orderList);
+        if (Object.keys(cart).length === 0) return;
+        // Add cart items to orders
+        for (const id in cart) {
+          orders.push({ ...cart[id] });
+        }
         cart = {};
         updateCartUI();
-        cartSidebar.classList.remove('open');
-        showPopupMessage('Fruits Bought');
+        alert('Order placed successfully!');
+        orderSidebar.classList.add('open');
+        showOrders();
+        // You could add persistence here (localStorage, etc.)
       }
-    });
-
-    clearOrdersBtn.addEventListener('click', () => {
-      orders = [];
-      showOrders();
-      showPopupMessage('All orders cleared');
     });
 
     function showOrders() {
-      orderSidebar.classList.add('open');
       orderItems.innerHTML = '';
       if (orders.length === 0) {
         orderItems.innerHTML = '<p>No orders yet.</p>';
+        clearOrdersBtn.disabled = true;
+        clearOrdersBtn.style.cursor = 'not-allowed';
         return;
       }
+      clearOrdersBtn.disabled = false;
+      clearOrdersBtn.style.cursor = 'pointer';
 
-      orders.forEach((order) => {
+      orders.forEach((order, i) => {
         const orderElem = document.createElement('div');
         orderElem.classList.add('cart-item');
         orderElem.innerHTML = `
@@ -308,55 +306,53 @@
             <div class="cart-item-name">${order.name}</div>
             <div class="cart-item-qty">Qty: ${order.qty}</div>
           </div>
-          <div class="cart-item-price">₹${(order.price * order.qty).toFixed(2)}</div>
+          <div>₹${(order.price * order.qty).toFixed(2)}</div>
         `;
         orderItems.appendChild(orderElem);
       });
+
+      orderSidebar.classList.add('open');
     }
 
-    function showPopupMessage(message) {
-      const popup = document.getElementById('popup-message');
-      popup.textContent = message;
-      popup.classList.add('show');
-      setTimeout(() => {
-        popup.classList.remove('show');
-      }, 3000);
-    }
-
-    function filterProducts() {
-      const query = searchBar.value.toLowerCase().trim();
-      if (query === '') {
-        productCards.forEach(card => card.style.display = '');
-      } else {
-        productCards.forEach(card => {
-          const name = card.getAttribute('data-name').toLowerCase();
-          card.style.display = name.includes(query) ? '' : 'none';
-        });
-      }
-    }
-
-    searchBtn.addEventListener('click', filterProducts);
-    searchBar.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        filterProducts();
+    clearOrdersBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all orders?')) {
+        orders = [];
+        showOrders();
       }
     });
 
-    searchBar.addEventListener('input', () => {
-      if (searchBar.value.trim() === '') {
-        filterProducts();
-      }
+    // Search functionality
+    searchBtn.addEventListener('click', () => {
+      const query = searchBar.value.trim().toLowerCase();
+      productCards.forEach(card => {
+        const name = card.getAttribute('data-name').toLowerCase();
+        if (name.includes(query)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // Audio on hover for images with .hover-audio-image
+    const hoverAudioImages = document.querySelectorAll('.hover-audio-image');
+    hoverAudioImages.forEach(image => {
+      const audioId = image.dataset.audio;
+      const audio = document.getElementById(audioId);
+      if (!audio) return;
+
+      image.addEventListener('mouseenter', () => {
+        audio.currentTime = 0;
+        audio.play();
+      });
+
+      image.addEventListener('mouseleave', () => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
     });
   });
-
-  const hamburger = document.querySelector('.hamburger');
-  const mobileMenu = document.querySelector('.mobile-menu');
-
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-  });
-  
 </script>
+
 </body>
 </html>
