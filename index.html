@@ -56,7 +56,6 @@
     <article class="product-card" data-id="2" data-name="Bananas" data-price="107">
       <img src="Banana.jpg"
         alt="Bananas" />
-        <audio id="product-card" src="kela.mp3"></audio>
       <h3>Bananas</h3>
       <p class="price">₹107 / Bunch</p>
       <button class="add-cart">Add to Cart</button>
@@ -357,20 +356,7 @@
   hamburger.addEventListener('click', () => {
     mobileMenu.classList.toggle('open');
   });
-  const image = document.querySelector(".hover-audio-image");
-  const audio = document.getElementById("hover-audio");
-
-  image.addEventListener("mouseenter", () => {
-    audio.currentTime = 0; // Start from beginning
-    audio.play();
-  });
-
-  image.addEventListener("mouseleave", () => {
-    audio.pause();
-    audio.currentTime = 0;
-  });
->
-
+  
 </script>
 </body>
 </html>
