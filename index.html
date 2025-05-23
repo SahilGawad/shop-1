@@ -283,7 +283,6 @@
         alert('Order placed successfully!');
         orderSidebar.classList.add('open');
         showOrders();
-        // You could add persistence here (localStorage, etc.)
       }
     });
 
@@ -334,19 +333,36 @@
       });
     });
 
-    // Audio on hover for images with .hover-audio-image
+    // Audio on hover (desktop) and tap (mobile) for images with .hover-audio-image
     const hoverAudioImages = document.querySelectorAll('.hover-audio-image');
     hoverAudioImages.forEach(image => {
       const audioId = image.dataset.audio;
       const audio = document.getElementById(audioId);
       if (!audio) return;
 
+      // Desktop hover
       image.addEventListener('mouseenter', () => {
         audio.currentTime = 0;
         audio.play();
       });
-
       image.addEventListener('mouseleave', () => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+
+      // Mobile touch (tap) — play audio on touchstart
+      image.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // prevent triggering mouse events or scrolling
+        audio.currentTime = 0;
+        audio.play();
+      });
+
+      // Optional: stop audio on touchend or touchcancel
+      image.addEventListener('touchend', () => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+      image.addEventListener('touchcancel', () => {
         audio.pause();
         audio.currentTime = 0;
       });
