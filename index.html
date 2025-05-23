@@ -53,8 +53,9 @@
     <button class="add-cart">Add to Cart</button>
   </article>
   
-  <article class="product-card" data-id="2" data-name="Bananas" data-price="107">
-    <img src="Banana.jpg" alt="Bananas" class="hover-audio-image" data-audio="audio-banana" />
+  <!-- Banana card with hover-audio on whole card -->
+  <article class="product-card hover-audio-image" data-id="2" data-name="Bananas" data-price="107" data-audio="audio-banana">
+    <img src="Banana.jpg" alt="Bananas" />
     <audio id="audio-banana" src="kela.mp3" preload="auto"></audio>
     <h3>Bananas</h3>
     <p class="price">₹107 / Bunch</p>
@@ -272,21 +273,17 @@
     }
 
     checkoutBtn.addEventListener('click', () => {
-      if (!checkoutBtn.disabled) {
-        if (Object.keys(cart).length === 0) return;
-        // Add cart items to orders
-        for (const id in cart) {
-          orders.push({ ...cart[id] });
-        }
-        cart = {};
-        updateCartUI();
-        alert('Order placed successfully!');
-        orderSidebar.classList.add('open');
-        showOrders();
-      }
+      if (Object.keys(cart).length === 0) return;
+      orders.push({...cart});
+      cart = {};
+      updateCartUI();
+      cartSidebar.classList.remove('open');
+      showOrders();
+      alert('Order placed successfully!');
     });
 
     function showOrders() {
+      orderSidebar.classList.add('open');
       orderItems.innerHTML = '';
       if (orders.length === 0) {
         orderItems.innerHTML = '<p>No orders yet.</p>';
@@ -297,32 +294,31 @@
       clearOrdersBtn.disabled = false;
       clearOrdersBtn.style.cursor = 'pointer';
 
-      orders.forEach((order, i) => {
-        const orderElem = document.createElement('div');
-        orderElem.classList.add('cart-item');
-        orderElem.innerHTML = `
-          <div>
-            <div class="cart-item-name">${order.name}</div>
-            <div class="cart-item-qty">Qty: ${order.qty}</div>
-          </div>
-          <div>₹${(order.price * order.qty).toFixed(2)}</div>
-        `;
-        orderItems.appendChild(orderElem);
+      orders.forEach((order, index) => {
+        const orderDiv = document.createElement('div');
+        orderDiv.classList.add('order-entry');
+        orderDiv.innerHTML = `<h4>Order #${index + 1}</h4>`;
+        const ul = document.createElement('ul');
+        for (const id in order) {
+          const item = order[id];
+          const li = document.createElement('li');
+          li.textContent = `${item.name} - Qty: ${item.qty}`;
+          ul.appendChild(li);
+        }
+        orderDiv.appendChild(ul);
+        orderItems.appendChild(orderDiv);
       });
-
-      orderSidebar.classList.add('open');
     }
 
     clearOrdersBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to clear all orders?')) {
-        orders = [];
-        showOrders();
-      }
+      if (!confirm('Clear all orders?')) return;
+      orders = [];
+      showOrders();
     });
 
     // Search functionality
     searchBtn.addEventListener('click', () => {
-      const query = searchBar.value.trim().toLowerCase();
+      const query = searchBar.value.toLowerCase();
       productCards.forEach(card => {
         const name = card.getAttribute('data-name').toLowerCase();
         if (name.includes(query)) {
@@ -333,36 +329,42 @@
       });
     });
 
-    // Audio on hover (desktop) and tap (mobile) for images with .hover-audio-image
-    const hoverAudioImages = document.querySelectorAll('.hover-audio-image');
-    hoverAudioImages.forEach(image => {
-      const audioId = image.dataset.audio;
+    searchBar.addEventListener('input', () => {
+      if (searchBar.value === '') {
+        productCards.forEach(card => card.style.display = '');
+      }
+    });
+
+    // Play audio on hover and touchstart on banana card box
+    const hoverAudioCards = document.querySelectorAll('.hover-audio-image');
+    hoverAudioCards.forEach(card => {
+      const audioId = card.dataset.audio;
       const audio = document.getElementById(audioId);
       if (!audio) return;
 
       // Desktop hover
-      image.addEventListener('mouseenter', () => {
+      card.addEventListener('mouseenter', () => {
         audio.currentTime = 0;
         audio.play();
       });
-      image.addEventListener('mouseleave', () => {
+      card.addEventListener('mouseleave', () => {
         audio.pause();
         audio.currentTime = 0;
       });
 
-      // Mobile touch (tap) — play audio on touchstart
-      image.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // prevent triggering mouse events or scrolling
+      // Mobile touch (tap)
+      card.addEventListener('touchstart', (e) => {
+        e.preventDefault();
         audio.currentTime = 0;
         audio.play();
       });
 
-      // Optional: stop audio on touchend or touchcancel
-      image.addEventListener('touchend', () => {
+      card.addEventListener('touchend', () => {
         audio.pause();
         audio.currentTime = 0;
       });
-      image.addEventListener('touchcancel', () => {
+
+      card.addEventListener('touchcancel', () => {
         audio.pause();
         audio.currentTime = 0;
       });
