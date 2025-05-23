@@ -86,21 +86,19 @@ body {
   text-decoration: none;
 }
 
-/* Hamburger (mobile only) */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  cursor: pointer;
+/* Hamburger Animation when active */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
 }
 
-.hamburger div {
-  width: 25px;
-  height: 3px;
-  background-color: var(--accent-color);
-  transition: all 0.3s ease;
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
 }
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
 
 .mobile-menu {
   display: none;
